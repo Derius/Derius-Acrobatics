@@ -26,6 +26,8 @@ public class Fall extends Ability
 	{
 		super.setDescription("Reduces fall damage");
 		
+		super.setName("Roll");
+		
 		super.setType(AbilityType.PASSIVE);
 	}
 	
@@ -46,7 +48,7 @@ public class Fall extends Ability
 	}
 
 	@Override
-	public Optional<Object> onActivate(MPlayer p, Object other)
+	public Object onActivate(MPlayer p, Object other)
 	{
 		if ( ! (other instanceof PlayerDamageEvent)) return Optional.empty();
 		PlayerDamageEvent event = (PlayerDamageEvent) other;
@@ -69,7 +71,7 @@ public class Fall extends Ability
 	}
 
 	@Override
-	public void onDeactivate(MPlayer p, Optional<Object> other)
+	public void onDeactivate(MPlayer p, Object other)
 	{
 		// LELNOPE
 		

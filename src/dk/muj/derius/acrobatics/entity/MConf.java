@@ -1,6 +1,9 @@
 package dk.muj.derius.acrobatics.entity;
 
+import java.util.Map;
+
 import com.massivecraft.massivecore.store.Entity;
+import com.massivecraft.massivecore.util.MUtil;
 
 public class MConf extends Entity<MConf>
 {
@@ -21,12 +24,18 @@ public class MConf extends Entity<MConf>
 	private int fallId = 41;
 	public int getFallId() { return fallId; }
 	
-	private int dodgeId = 42;
-	public int getDodgeId() { return dodgeId; }
+	private int jumpId = 42;
+	public int getJumpId() { return jumpId; }
 	
 	public String skillName = "Acrobatics";
 	
 	public int levelsPerBlock = 50;
 	
 	public int expPerBlock = 50;
+	
+	public int sneakMultiplier = 3;
+	
+	public Map<Integer, JumpSetting> jumpSteps = MUtil.map(
+			10, new JumpSetting(1, 0.5)
+			);
 }

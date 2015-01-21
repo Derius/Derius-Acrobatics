@@ -1,5 +1,8 @@
 package dk.muj.derius.acrobatics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.massivecraft.massivecore.MassivePlugin;
 
 import dk.muj.derius.acrobatics.entity.MConfColl;
@@ -14,6 +17,17 @@ public class DeriusAcrobatics extends MassivePlugin
 	public static DeriusAcrobatics get() { return i; }
 	public DeriusAcrobatics() { i = this; }
 
+	// -------------------------------------------- //
+	// INSTANCE & CONSTRUCT
+	// -------------------------------------------- //
+	
+	//				ID,		Seconds sneaked
+	final static Map<String, Byte> sneakTime = new HashMap<String, Byte>();
+	
+	// -------------------------------------------- //
+	// OVERRIDE
+	// -------------------------------------------- //
+	
 	@Override
 	public void onEnable()
 	{
@@ -21,8 +35,11 @@ public class DeriusAcrobatics extends MassivePlugin
 		
 		MConfColl.get().init();
 		
+		SneakTask.get().activate();
+		
 		AcrobaticsEngine.get().activate();
 		AcrobaticsSkill.get().register();
+		JumpAbility.get().register();
 		Fall.get().register();
 		
 		this.postEnable();

@@ -1,0 +1,7 @@
+main: dk.muj.derius.acrobatics.DeriusAcrobatics
+name: Derius-Acrobatics
+version: 0.1_dev
+#website: http://muj.dk/Derius
+authors: [madus]
+description: §eDerius is an open skill framework
+depend: [Derius-Core]

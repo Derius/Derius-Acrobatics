@@ -28,6 +28,6 @@ public class MConfColl extends Coll<MConf>
 	public void init()
 	{
 		super.init();
-		MConf.i = this.get("MiningSkill", true);
+		MConf.i = this.get("AcrobaticsSkill", true);
 	}
 }

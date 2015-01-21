@@ -1,8 +1,5 @@
 package dk.muj.derius.acrobatics;
 
-import java.util.Optional;
-
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,21 +44,23 @@ public class AcrobaticsEngine extends EngineAbstract
 		
 		MPlayer player = MPlayer.get( (Player) event.getInnerEvent().getEntity());
 		
-		Optional<Object> opt = AbilityUtil.activateAbility(player, Fall.get(), event, false);
+		Object obj = AbilityUtil.activateAbility(player, Fall.get(), event, false);
 		
 		double damage;
-		if ( ! opt.isPresent())
+		if ( obj == null )
 		{
 			damage = event.getInnerEvent().getDamage();
 		}
 		else
 		{
-			Object obj = opt.get();
 			if ( ! (obj instanceof Double)) return;
 			damage = (double) obj;
 		}
 		
-		player.addExp(AcrobaticsSkill.get(), (long) damage*MConf.get().expPerBlock);
+		int exp = (int) damage*MConf.get().expPerBlock;
+		if (player.getPlayer().isSneaking()) exp *= MConf.get().sneakMultiplier;
+		
+		player.addExp(AcrobaticsSkill.get(), exp);
 	}
 	
 }
