@@ -1,5 +1,5 @@
-main: dk.muj.derius.acrobatics.DeriusAcrobatics
-name: Derius-Acrobatics
+main: dk.muj.derius.parkour.DeriusAcrobatics
+name: Derius-Parkour
 version: 0.1_dev
 #website: http://muj.dk/Derius
 authors: [madus]
