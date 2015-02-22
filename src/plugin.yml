@@ -1,4 +1,4 @@
-main: dk.muj.derius.parkour.DeriusAcrobatics
+main: dk.muj.derius.parkour.DeriusParkour
 name: Derius-Parkour
 version: 0.1_dev
 #website: http://muj.dk/Derius

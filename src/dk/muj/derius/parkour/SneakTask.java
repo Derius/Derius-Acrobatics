@@ -4,22 +4,21 @@ import java.util.Optional;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import com.massivecraft.massivecore.ModuloRepeatTask;
 import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.util.Txt;
 
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.DeriusAPI;
 import dk.muj.derius.engine.MsgEngine;
+import dk.muj.derius.lib.Task;
 import dk.muj.derius.util.AbilityUtil;
 import dk.muj.derius.util.LevelUtil;
 
-public class SneakTask extends ModuloRepeatTask
+public class SneakTask extends Task
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
@@ -36,7 +35,7 @@ public class SneakTask extends ModuloRepeatTask
 	@Override
 	public Plugin getPlugin()
 	{
-		return DeriusAcrobatics.get();
+		return DeriusParkour.get();
 	}
 	
 	// -------------------------------------------- //
@@ -54,60 +53,41 @@ public class SneakTask extends ModuloRepeatTask
 			
 			if ( ! player.isSneaking() || ! entity.isOnGround() ||  ! AbilityUtil.canPlayerActivateAbility(dplayer, JumpAbility.get(), false))
 			{
+				
 				String id = player.getUniqueId().toString();
-				DeriusAcrobatics.sneakTime.remove(id);
+				if (DeriusParkour.sneakTime.containsKey(id))
+				{
+					MsgEngine.sendActionBar(dplayer, "");
+					player.removePotionEffect(PotionEffectType.JUMP);
+					
+				}
+				DeriusParkour.sneakTime.remove(id);
 				return;
 			}
 			
 			String id = player.getUniqueId().toString();
 			
-			Short unit = DeriusAcrobatics.sneakTime.get(id);
+			Short unit = DeriusParkour.sneakTime.get(id);
 			if (unit == null) unit = 0;
 			unit++;
 			
-			DeriusAcrobatics.sneakTime.put(id, unit);
+			DeriusParkour.sneakTime.put(id, unit);
 		
-			Optional<JumpSetting> setting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), dplayer.getLvl(ParkourSkill.get()));
-			if ( ! setting.isPresent()) return;
-			unit = (short) (unit > setting.get().getMaxUnits() ? setting.get().getMaxUnits() : unit);
+			Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), dplayer.getLvl(ParkourSkill.get()));
+			if ( ! optSetting.isPresent()) return;
+			JumpSetting setting = optSetting.get();
+			unit = (short) (unit > setting.getMaxUnits() ? setting.getMaxUnits() : unit);
 			String color = "<green>";
-			double maxUnits = setting.get().getMaxVector()/setting.get().getVectorPerUnit();
+			int maxUnits = setting.getMaxUnits();
 			if (unit < Math.ceil(maxUnits/4.0*2.0)) color = "<yellow>";
 			if (unit < Math.ceil(maxUnits/4.0)) color = "<red>";
 			
 			String msg = color + Txt.repeat("|", unit);
-			msg += "<black>" + Txt.repeat("|", setting.get().getMaxUnits() - unit);
+			msg += "<black>" + Txt.repeat("|", setting.getMaxUnits() - unit);
 			MsgEngine.sendActionBar(dplayer,  msg);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 3, setting.getPotionLevel(unit), false, false), true);
 		}
 		
-	}
-	
-	// -------------------------------------------- //
-	// EVENT
-	// -------------------------------------------- //
-	
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onJump(PlayerMoveEvent event)
-	{
-		Player player = event.getPlayer();
-		Entity entity = player; // Their isOnGround method is better.
-		DPlayer dplayer = DeriusAPI.getDPlayer(player);
-		if ( ! player.isSneaking() || ! entity.isOnGround()) return;
-		
-		String id = player.getUniqueId().toString();
-		
-		if ( ! MUtil.isSameBlock(event)) DeriusAcrobatics.sneakTime.remove(id);
-		
-		Short unit = DeriusAcrobatics.sneakTime.get(id);
-		if (unit == null || unit < 2) return;
-		
-		if (event.getTo().getY() - event.getFrom().getY() <= 0.0001)
-		{
-			return;
-		}
-
-		AbilityUtil.activateAbility(dplayer, JumpAbility.get(), unit, false);
-		MsgEngine.sendActionBar(dplayer,  "");
 	}
 
 }

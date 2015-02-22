@@ -3,18 +3,32 @@ package dk.muj.derius.parkour;
 public class Const
 {
 	// -------------------------------------------- //
-	// DATABASE
+	// BASENAME
 	// -------------------------------------------- //
 	
 	public static final String BASENAME = "derius_acrobatics";
 	public static final String BASENAME_ = BASENAME + "_";
 	
-	public static final String COLLECTION_MCONF = BASENAME_ + "mconf";
+	// -------------------------------------------- //
+	// CONFIGURATION
+	// -------------------------------------------- //
 	
+	public static final String JSON_EXP_PER_BLOCK_FALLEN = 	"Experience Per Fallen Block";
+	public static final String JSON_DAMAGE_LESS_PER_LEVEL = "Damage Less Per Level";
+	public static final String JSON_SNEAK_MULTIPLIER = "Multiplier by sneaking";
+	public static final String JSON_JUMP_STEPS = "Jump Steps";
+	public static final String JSON_SPEED_BOOST = "Speed Boost";
 	
-	public static final String JSON_EXP_PER_BLOCK_FALLEN = 	"expPerBlockFallen";
-	public static final String JSON_DAMAGE_LESS_PER_LEVEL = "lessDamagePerLevel";
-	public static final String JSON_SNEAK_MULTIPLIER = "sneakMultiplier";
-	public static final String JSON_JUMP_STEPS = "sneakMultiplier";
+	// -------------------------------------------- //
+	// VALUES
+	// -------------------------------------------- //
+	
+	public static final float UNITS_PER_SECOND = 10.0F;
+	
+	// -------------------------------------------- //
+	// BUKKIT VALUES
+	// -------------------------------------------- //
+	
+	public static final float DEFAULT_WALK_SPEED = 0.2F;
 	
 }

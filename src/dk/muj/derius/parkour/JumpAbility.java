@@ -2,8 +2,6 @@ package dk.muj.derius.parkour;
 
 import java.util.Optional;
 
-import org.bukkit.util.Vector;
-
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.Skill;
 import dk.muj.derius.entity.ability.DeriusAbility;
@@ -11,7 +9,6 @@ import dk.muj.derius.util.LevelUtil;
 
 public class JumpAbility extends DeriusAbility
 {
-	
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
@@ -20,11 +17,11 @@ public class JumpAbility extends DeriusAbility
 	public static JumpAbility get() { return i; }
 	private JumpAbility()
 	{
-		super.setDesc("Jump up high");
+		this.setDesc("Jump up high");
 		
-		super.setName("Jump");
+		this.setName("Jump");
 		
-		super.setType(AbilityType.PASSIVE);
+		this.setType(AbilityType.PASSIVE);
 	}
 
 	// -------------------------------------------- //
@@ -42,7 +39,7 @@ public class JumpAbility extends DeriusAbility
 	{
 		Optional<JumpSetting> setting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), lvl);
 		if ( ! setting.isPresent()) return "no jump bonus";
-		return String.format("<i>Wait time:<h>%ds <i>Vector:<h>%d", setting.get().getMaxUnits()/10.0, setting.get().getMaxVector());
+		return String.format("<i>Wait time:<h>%ss <i>Potion:<h>%f", setting.get().getMaxUnits()/Const.UNITS_PER_SECOND, setting.get().getMaxPotionLevel());
 	}
 	
 	@Override
@@ -56,17 +53,21 @@ public class JumpAbility extends DeriusAbility
 	// -------------------------------------------- //
 
 	@Override
-	public Object onActivate(DPlayer mplayer, Object other)
+	public Object onActivate(DPlayer dplayer, Object other)
 	{
-		Optional<JumpSetting> setting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), mplayer.getLvl(ParkourSkill.get()));
-		if ( ! setting.isPresent()) return null;
-		Short unit = DeriusAcrobatics.sneakTime.get(mplayer.getId());
-		if (other != null && other instanceof Number) unit = ((Number) other).shortValue();
+		if ( ! dplayer.isPlayer()) return null;
+		Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), dplayer.getLvl(this.getSkill()));
+		if ( ! optSetting.isPresent()) return null;
+		JumpSetting setting = optSetting.get();
+		Short units = DeriusParkour.sneakTime.get(dplayer.getId());
+		if (other != null && other instanceof Number) units = ((Number) other).shortValue();
+		// Player player = dplayer.getPlayer();
 		
-		Vector direction = mplayer.getPlayer().getVelocity().setY(setting.get().getVector(unit));
-		mplayer.getPlayer().setVelocity(direction);
+		int potionLevel = setting.getPotionLevel(units);
 		
-		return unit;
+		dplayer.msg(String.valueOf(potionLevel));
+		
+		return units;
 	}
 
 	@Override

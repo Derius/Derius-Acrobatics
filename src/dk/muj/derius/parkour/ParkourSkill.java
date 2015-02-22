@@ -33,7 +33,8 @@ public class ParkourSkill extends DeriusSkill
 		this.writeConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, 50);
 		this.writeConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, 50);
 		this.writeConfig(Const.JSON_SNEAK_MULTIPLIER, 3.0);
-		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map( 10, new JumpSetting(0.1, 2) ), new TypeToken<Map<Integer, JumpSetting>>(){});
+		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map(10, new JumpSetting(10, 5) ), new TypeToken<Map<Integer, JumpSetting>>(){});
+		this.writeConfig(Const.JSON_SPEED_BOOST, MUtil.map(10, (float) 0.1));
 	}
 
 	// -------------------------------------------- //
@@ -52,22 +53,27 @@ public class ParkourSkill extends DeriusSkill
 	
 	public static int getExpPerBlockFallen()
 	{
-		return i.readConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, Integer.class);
+		return get().readConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, Integer.TYPE);
 	}
 	
 	public static int getDamageLessPerLevel()
 	{
-		return i.readConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, Integer.class);
+		return get().readConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, Integer.TYPE);
 	}
 	
 	public static double getSneakMutiplier()
 	{
-		return i.readConfig(Const.JSON_SNEAK_MULTIPLIER, Double.class);
+		return get().readConfig(Const.JSON_SNEAK_MULTIPLIER, Double.TYPE);
 	}
 	
 	public static Map<Integer, JumpSetting> getJumpSteps()
 	{
-		return i.readConfig(Const.JSON_JUMP_STEPS, new TypeToken<Map<Integer, JumpSetting>>(){});
+		return get().readConfig(Const.JSON_JUMP_STEPS, new TypeToken<Map<Integer, JumpSetting>>(){});
+	}
+	
+	public static Map<Integer, Float> getSpeedBoosts()
+	{
+		return get().readConfig(Const.JSON_SPEED_BOOST, new TypeToken<Map<Integer, Float>>(){});
 	}
 	
 }

@@ -5,18 +5,18 @@ import java.util.Map;
 
 import com.massivecraft.massivecore.MassivePlugin;
 
-public class DeriusAcrobatics extends MassivePlugin
+public class DeriusParkour extends MassivePlugin
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
 	
-	private static DeriusAcrobatics i;
-	public static DeriusAcrobatics get() { return i; }
-	public DeriusAcrobatics() { i = this; }
+	private static DeriusParkour i;
+	public static DeriusParkour get() { return i; }
+	public DeriusParkour() { i = this; }
 
 	// -------------------------------------------- //
-	// INSTANCE & CONSTRUCT
+	// FIELDS
 	// -------------------------------------------- //
 	
 	//				ID,		Seconds sneaked
@@ -36,6 +36,7 @@ public class DeriusAcrobatics extends MassivePlugin
 		ParkourEngine.get().activate();
 		ParkourSkill.get().register();
 		JumpAbility.get().register();
+		RunAbility.get().register();
 		Fall.get().register();
 		
 		this.postEnable();

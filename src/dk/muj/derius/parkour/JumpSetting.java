@@ -6,52 +6,53 @@ public class JumpSetting
 	// FIELDS
 	// -------------------------------------------- //
 	
-	private float vectorPerUnit;
-	public float getVectorPerUnit(){ return vectorPerUnit; }
-	public void setVectorPerUnit(float vectorPerUnit){ this.vectorPerUnit = vectorPerUnit; }
+	private int unitsPerPotionLevel;
+	public int getUnitsPerPotionLevel(){ return unitsPerPotionLevel; }
+	public void setUnitsPerPotionLevel(int unitsPerPotionLevel){ this.unitsPerPotionLevel = unitsPerPotionLevel; }
 	
-	private float maxVector;
-	public float getMaxVector(){ return maxVector; }
-	public void setMaxVector(float maxVector){ this.maxVector = maxVector; }
+	private int maxPotionLevel;
+	public int getMaxPotionLevel(){ return maxPotionLevel; }
+	public void setMaxPotionLevel(int maxPotionLevel){ this.maxPotionLevel = maxPotionLevel; }
 	
 	// -------------------------------------------- //
 	// CONSTRUCTERS
 	// -------------------------------------------- //
 	
+	// GSON
+	@Deprecated
 	public JumpSetting()
 	{
-		vectorPerUnit = (float) 0.1;
-		maxVector = (float) 2.0;
-	}
-
-	public JumpSetting(float vectorPerUnit, float maxVector)
-	{
-		this.vectorPerUnit = vectorPerUnit;
-		this.maxVector = maxVector;
+		this(0, 0);
 	}
 	
-	public JumpSetting(double vectorPerUnit, double maxVector)
+	// Default
+	public JumpSetting(int unitsPerPotionLevel, int maxPotionLevel)
 	{
-		this( (float) vectorPerUnit, (float) maxVector);
-	}
-	
-	public JumpSetting(int vectorPerUnit, int maxVector)
-	{
-		this( (float) vectorPerUnit, (float) maxVector);
+		this.setUnitsPerPotionLevel(unitsPerPotionLevel);
+		this.setMaxPotionLevel(maxPotionLevel);
 	}
 	
 	// -------------------------------------------- //
 	// CALCULATIONS
 	// -------------------------------------------- //
 	
-	public double getVector(int units)
+	public int getPotionLevel(int units)
 	{
-		return vectorPerUnit*units;
+		units = this.prepareUnits(units);
+		if (units == 0 || this.getUnitsPerPotionLevel() == 0) return 0;
+		return units / this.getUnitsPerPotionLevel();
 	}
 	
 	public int getMaxUnits()
 	{
-		return (int) Math.ceil(maxVector/vectorPerUnit);
+		return (int) Math.ceil(this.getUnitsPerPotionLevel() * this.getMaxPotionLevel());
+	}
+	
+	public int prepareUnits(int units)
+	{
+		int max = this.getMaxUnits();
+		if (units >= max) return max;
+		return units;
 	}
 	
 }

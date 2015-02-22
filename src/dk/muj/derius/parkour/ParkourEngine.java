@@ -30,7 +30,7 @@ public class ParkourEngine extends EngineAbstract
 	@Override
 	public Plugin getPlugin()
 	{
-		return DeriusAcrobatics.get();
+		return DeriusParkour.get();
 	}
 
 	// -------------------------------------------- //
@@ -38,7 +38,7 @@ public class ParkourEngine extends EngineAbstract
 	// -------------------------------------------- //
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onFall(PlayerDamageEvent event)
+	public void reduceFallDamage_and_GiveExp(PlayerDamageEvent event)
 	{	
 		if (event.getInnerEvent().getCause() != DamageCause.FALL) return;
 		
