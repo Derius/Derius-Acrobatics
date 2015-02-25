@@ -39,7 +39,7 @@ public class JumpAbility extends DeriusAbility
 	{
 		Optional<JumpSetting> setting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), lvl);
 		if ( ! setting.isPresent()) return "no jump bonus";
-		return String.format("<i>Wait time:<h>%ss <i>Potion:<h>%f", setting.get().getMaxUnits()/Const.UNITS_PER_SECOND, setting.get().getMaxPotionLevel());
+		return String.format("<i>Wait time:<h>%ss <i>Potion:<h>%s", setting.get().getMaxUnits()/Const.UNITS_PER_SECOND, setting.get().getMaxPotionLevel());
 	}
 	
 	@Override

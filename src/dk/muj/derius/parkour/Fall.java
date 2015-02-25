@@ -9,7 +9,7 @@ import com.massivecraft.massivecore.util.Txt;
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.Skill;
 import dk.muj.derius.entity.ability.DeriusAbility;
-import dk.muj.derius.events.PlayerDamageEvent;
+import dk.muj.derius.events.player.PlayerDamageEvent;
 
 public class Fall extends DeriusAbility
 {
