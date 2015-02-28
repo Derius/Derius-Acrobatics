@@ -43,21 +43,21 @@ public class ParkourEngine extends EngineAbstract
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void reduceFallDamage_and_GiveExp(EntityDamageEvent event)
 	{	
-		if (event.getCause() != DamageCause.FALL || ! (event.getEntity() instanceof Player)) return;
+		if (event.getCause() != DamageCause.FALL) return;
+		if ( ! (event.getEntity() instanceof Player)) return;
 		
 		DPlayer dplayer = DeriusAPI.getDPlayer( (Player) event.getEntity());
 		
 		Object obj = AbilityUtil.activateAbility(dplayer, Fall.get(), event, VerboseLevel.HIGHEST);
 		
 		double damage;
-		if ( obj == null )
+		if (obj instanceof Number)
 		{
-			damage = event.getDamage();
+			damage = ((Number) obj).doubleValue();
 		}
 		else
 		{
-			if ( ! (obj instanceof Number)) return;
-			damage = ((Number) obj).doubleValue();
+			damage = event.getDamage();
 		}
 		
 		int exp = (int) damage * ParkourSkill.getExpPerBlockFallen();

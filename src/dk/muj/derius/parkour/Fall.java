@@ -3,6 +3,7 @@ package dk.muj.derius.parkour;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.util.Txt;
 
 import dk.muj.derius.api.DPlayer;
@@ -63,7 +64,8 @@ public class Fall extends DeriusAbility
 			damageReduce *= ParkourSkill.getDamageLessSneakMutiplier();
 		}
 		
-		event.setDamage(originalDamage-damageReduce);
+		// We use this method because standard bukkit is buggy.
+		MUtil.setDamage(event, originalDamage-damageReduce);
 		if (event.getDamage() <= 0) event.setCancelled(true);
 		
 		return event.getDamage();
