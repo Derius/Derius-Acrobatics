@@ -3,6 +3,7 @@ package dk.muj.derius.parkour;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.plugin.Plugin;
 
@@ -13,7 +14,6 @@ import dk.muj.derius.api.Ability;
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.DeriusAPI;
 import dk.muj.derius.api.VerboseLevel;
-import dk.muj.derius.events.player.PlayerDamageEvent;
 import dk.muj.derius.util.AbilityUtil;
 
 public class ParkourEngine extends EngineAbstract
@@ -41,29 +41,29 @@ public class ParkourEngine extends EngineAbstract
 	// -------------------------------------------- //
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void reduceFallDamage_and_GiveExp(PlayerDamageEvent event)
+	public void reduceFallDamage_and_GiveExp(EntityDamageEvent event)
 	{	
-		if (event.getInnerEvent().getCause() != DamageCause.FALL) return;
+		if (event.getCause() != DamageCause.FALL || ! (event.getEntity() instanceof Player)) return;
 		
-		DPlayer player = DeriusAPI.getDPlayer( (Player) event.getInnerEvent().getEntity());
+		DPlayer dplayer = DeriusAPI.getDPlayer( (Player) event.getEntity());
 		
-		Object obj = AbilityUtil.activateAbility(player, Fall.get(), event, VerboseLevel.HIGHEST);
+		Object obj = AbilityUtil.activateAbility(dplayer, Fall.get(), event, VerboseLevel.HIGHEST);
 		
 		double damage;
 		if ( obj == null )
 		{
-			damage = event.getInnerEvent().getDamage();
+			damage = event.getDamage();
 		}
 		else
 		{
-			if ( ! (obj instanceof Double)) return;
-			damage = (double) obj;
+			if ( ! (obj instanceof Number)) return;
+			damage = ((Number) obj).doubleValue();
 		}
 		
 		int exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
-		if (player.getPlayer().isSneaking()) exp *= ParkourSkill.getSneakMutiplier();
+		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
 		
-		player.addExp(ParkourSkill.get(), exp);
+		dplayer.addExp(ParkourSkill.get(), exp);
 	}
 	
 	// -------------------------------------------- //

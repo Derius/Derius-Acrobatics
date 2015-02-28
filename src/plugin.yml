@@ -5,3 +5,4 @@ version: 0.1_dev
 authors: [madus]
 description: §eDerius is an open skill framework
 depend: [Derius-Core]
+load: startup

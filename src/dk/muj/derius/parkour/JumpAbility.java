@@ -2,6 +2,8 @@ package dk.muj.derius.parkour;
 
 import java.util.Optional;
 
+import com.massivecraft.massivecore.util.TimeUnit;
+
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.Skill;
 import dk.muj.derius.entity.ability.DeriusAbility;
@@ -37,9 +39,15 @@ public class JumpAbility extends DeriusAbility
 	@Override
 	public String getLvlDescriptionMsg(int lvl)
 	{
-		Optional<JumpSetting> setting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), lvl);
-		if ( ! setting.isPresent()) return "no jump bonus";
-		return String.format("<i>Wait time:<h>%ss <i>Potion:<h>%s", setting.get().getMaxUnits()/Const.UNITS_PER_SECOND, setting.get().getMaxPotionLevel());
+		Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), lvl);
+		if ( ! optSetting.isPresent()) return "no jump bonus";
+		
+		JumpSetting setting = optSetting.get();
+		
+		int maxUnits = setting.getMaxUnits();
+		int unitsPerSecond = ParkourSkill.getUnitsPerSecond();
+		long millis = (maxUnits/unitsPerSecond) * TimeUnit.MILLIS_PER_SECOND;
+		return String.format("<i>Wait time:<h>%ss <i>Potion effect: <h>%s", millis, setting.getMaxPotionLevel());
 	}
 	
 	@Override

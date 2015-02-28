@@ -1,7 +1,6 @@
 package dk.muj.derius.parkour;
 
-import java.util.Optional;
-
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.massivecraft.massivecore.util.Txt;
@@ -9,7 +8,6 @@ import com.massivecraft.massivecore.util.Txt;
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.Skill;
 import dk.muj.derius.entity.ability.DeriusAbility;
-import dk.muj.derius.events.player.PlayerDamageEvent;
 
 public class Fall extends DeriusAbility
 {
@@ -22,11 +20,11 @@ public class Fall extends DeriusAbility
 	
 	public Fall()
 	{
-		super.setDesc("Reduces fall damage");
+		this.setDesc("Reduces fall damage");
 		
-		super.setName("Roll");
+		this.setName("Roll");
 		
-		super.setType(AbilityType.PASSIVE);
+		this.setType(AbilityType.PASSIVE);
 	}
 	
 	// -------------------------------------------- //
@@ -46,26 +44,29 @@ public class Fall extends DeriusAbility
 	}
 
 	@Override
-	public Object onActivate(DPlayer p, Object other)
+	public Object onActivate(DPlayer dplayer, Object other)
 	{
-		if ( ! (other instanceof PlayerDamageEvent)) return Optional.empty();
-		PlayerDamageEvent event = (PlayerDamageEvent) other;
+		if ( ! (other instanceof EntityDamageEvent)) return null;
+		EntityDamageEvent event = (EntityDamageEvent) other;
 		
-		if (event.getInnerEvent().getCause() != DamageCause.FALL) return Optional.empty();
+		if (event.getCause() != DamageCause.FALL) return null;
 		
-		double damage = event.getInnerEvent().getFinalDamage();
+		final double originalDamage = event.getFinalDamage();
 		
-		p.msg("<lime>Damage: <i>"+damage);
+		int level = dplayer.getLvl(this.getSkill());
 		
-		damage -= p.getLvl(this.getSkill())/ParkourSkill.getDamageLessPerLevel();
 		
-		p.msg("<lime>Damage: <i>"+damage);
+		double damageReduce = originalDamage - ( (double) level / ParkourSkill.getDamageLessPerLevel());
 		
-		event.getInnerEvent().setDamage(damage);
+		if (dplayer.isPlayer() && dplayer.getPlayer().isSneaking())
+		{
+			damageReduce *= ParkourSkill.getDamageLessSneakMutiplier();
+		}
 		
-		if (damage <= 0) event.setCancelled(true);
+		event.setDamage(originalDamage-damageReduce);
+		if (event.getDamage() <= 0) event.setCancelled(true);
 		
-		return Optional.of(new Double(damage));
+		return event.getDamage();
 	}
 
 	@Override
