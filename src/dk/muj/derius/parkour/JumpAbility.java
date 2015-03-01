@@ -69,7 +69,6 @@ public class JumpAbility extends DeriusAbility
 		JumpSetting setting = optSetting.get();
 		Short units = DeriusParkour.sneakTime.get(dplayer.getId());
 		if (other != null && other instanceof Number) units = ((Number) other).shortValue();
-		// Player player = dplayer.getPlayer();
 		
 		int potionLevel = setting.getPotionLevel(units);
 		
@@ -81,7 +80,7 @@ public class JumpAbility extends DeriusAbility
 	@Override
 	public void onDeactivate(DPlayer p, Object other)
 	{
-		
+		// Lul
 	}
 
 }

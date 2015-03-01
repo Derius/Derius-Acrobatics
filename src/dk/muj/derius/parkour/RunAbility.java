@@ -17,11 +17,13 @@ public class RunAbility extends DeriusAbility
 	public static RunAbility get() { return i; }
 	private RunAbility()
 	{
-		super.setDesc("Run faster");
+		this.setDesc("Run faster");
 		
-		super.setName("Run");
+		this.setName("Run");
 		
-		super.setType(AbilityType.PASSIVE);
+		this.setType(AbilityType.PASSIVE);
+		
+		this.setCooldownMillis(-1);
 	}
 	
 	// -------------------------------------------- //

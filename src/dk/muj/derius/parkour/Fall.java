@@ -26,6 +26,8 @@ public class Fall extends DeriusAbility
 		this.setName("Roll");
 		
 		this.setType(AbilityType.PASSIVE);
+		
+		this.setCooldownMillis(-1);
 	}
 	
 	// -------------------------------------------- //
@@ -55,7 +57,6 @@ public class Fall extends DeriusAbility
 		final double originalDamage = event.getFinalDamage();
 		
 		int level = dplayer.getLvl(this.getSkill());
-		
 		
 		double damageReduce = originalDamage - ( (double) level / ParkourSkill.getDamageLessPerLevel());
 		
