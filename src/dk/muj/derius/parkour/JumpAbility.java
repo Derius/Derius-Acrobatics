@@ -45,7 +45,7 @@ public class JumpAbility extends DeriusAbility
 		JumpSetting setting = optSetting.get();
 		
 		int maxUnits = setting.getMaxUnits();
-		int unitsPerSecond = ParkourSkill.getUnitsPerSecond();
+		int unitsPerSecond = Const.UNITS_PER_SECOND;
 		long millis = (maxUnits/unitsPerSecond) * TimeUnit.MILLIS_PER_SECOND;
 		return String.format("<i>Wait time:<h>%ss <i>Potion effect: <h>%s", millis, setting.getMaxPotionLevel());
 	}

@@ -20,13 +20,13 @@ public class Const
 	public static final String JSON_JUMP_STEPS = "Jump Steps";
 	public static final String JSON_SPEED_BOOST = "Speed Boost";
 	public static final String JSON_JUMP_WAIT_UNITS = "Jump wait units";
-	public static final String JSON_UNITS_PER_SECOND = "Units per second";
 	
 	// -------------------------------------------- //
 	// VALUES
 	// -------------------------------------------- //
 	
 	public static final int JUMP_EFFECT_TICKS = 4;
+	public static final int UNITS_PER_SECOND = 10;
 	
 	// -------------------------------------------- //
 	// BUKKIT VALUES

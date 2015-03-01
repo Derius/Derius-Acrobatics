@@ -1,5 +1,6 @@
 package dk.muj.derius.parkour;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
@@ -14,7 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.massivecraft.massivecore.Progressbar;
 import com.massivecraft.massivecore.util.MUtil;
-import com.massivecraft.massivecore.util.TimeUnit;
 
 import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.DeriusAPI;
@@ -49,14 +49,10 @@ public class SneakTask extends RepeatingTask
 	// -------------------------------------------- //
 	
 	@Override
-	public long getDelayMillis()
-	{
-		return (long) (TimeUnit.MILLIS_PER_SECOND / ParkourSkill.getUnitsPerSecond());
-	}
-	
-	@Override
 	public void invoke(long useless_i_believe)
 	{
+		Map<Integer, JumpSetting> steps = ParkourSkill.getJumpSteps();
+		int waitUnits = ParkourSkill.getWaitUnits();
 		for (Player player : MUtil.getOnlinePlayers())
 		{
 			DPlayer dplayer = DeriusAPI.getDPlayer(player);
@@ -69,12 +65,12 @@ public class SneakTask extends RepeatingTask
 			
 			String id = player.getUniqueId().toString();
 			
-			Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), dplayer.getLvl(ParkourSkill.get()));
+			Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(steps, dplayer.getLvl(ParkourSkill.get()));
 			if ( ! optSetting.isPresent()) return;
 			final JumpSetting setting = optSetting.get();
 			final short unit = this.getUnit(id, setting.getMaxUnits());
 
-			DeriusParkour.sneakTime.put(id, (short) (unit+ParkourSkill.getWaitUnits()));
+			DeriusParkour.sneakTime.put(id, (short) (unit+waitUnits));
 
 			if (unit <= 0) return;
 			

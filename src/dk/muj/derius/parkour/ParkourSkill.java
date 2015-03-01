@@ -1,5 +1,6 @@
 package dk.muj.derius.parkour;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Material;
@@ -37,7 +38,6 @@ public class ParkourSkill extends DeriusSkill
 		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map(10, new JumpSetting(10, 5) ), new TypeToken<Map<Integer, JumpSetting>>(){});
 		this.writeConfig(Const.JSON_SPEED_BOOST, MUtil.map(10, (float) 0.1));
 		this.writeConfig(Const.JSON_JUMP_WAIT_UNITS, 20);
-		this.writeConfig(Const.JSON_UNITS_PER_SECOND, 10);
 	}
 
 	// -------------------------------------------- //
@@ -74,9 +74,20 @@ public class ParkourSkill extends DeriusSkill
 		return get().readConfig(Const.JSON_EXP_SNEAK_MULTIPLIER, Double.TYPE);
 	}
 	
+	// We get this value atlast 10 times per second.
+	// So we cach it and ask for a new value every once in a while.
+	public static final transient int STEPS_MAX_ATTEMPTS = 100;
+	private transient static int stepsLastCall = STEPS_MAX_ATTEMPTS-1;
+	private transient static Map<Integer, JumpSetting> stepCach = new HashMap<>();
 	public static Map<Integer, JumpSetting> getJumpSteps()
 	{
-		return get().readConfig(Const.JSON_JUMP_STEPS, new TypeToken<Map<Integer, JumpSetting>>(){});
+		// Use the cache
+		if (++stepsLastCall % STEPS_MAX_ATTEMPTS == 0)
+		{
+			stepCach = get().readConfig(Const.JSON_JUMP_STEPS, new TypeToken<Map<Integer, JumpSetting>>(){});
+		}
+		
+		return stepCach;
 	}
 	
 	public static Map<Integer, Float> getSpeedBoosts()
@@ -87,11 +98,6 @@ public class ParkourSkill extends DeriusSkill
 	public static short getWaitUnits()
 	{
 		return get().readConfig(Const.JSON_JUMP_WAIT_UNITS, Short.TYPE);
-	}
-	
-	public static short getUnitsPerSecond()
-	{
-		return get().readConfig(Const.JSON_UNITS_PER_SECOND, Short.TYPE);
 	}
 	
 }
