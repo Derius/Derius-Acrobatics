@@ -16,13 +16,13 @@ import org.bukkit.potion.PotionEffectType;
 import com.massivecraft.massivecore.Progressbar;
 import com.massivecraft.massivecore.util.MUtil;
 
-import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.DeriusAPI;
 import dk.muj.derius.api.VerboseLevel;
-import dk.muj.derius.engine.MsgEngine;
+import dk.muj.derius.api.player.DPlayer;
+import dk.muj.derius.api.util.AbilityUtil;
+import dk.muj.derius.api.util.LevelUtil;
+import dk.muj.derius.engine.EngineMsg;
 import dk.muj.derius.lib.scheduler.RepeatingTask;
-import dk.muj.derius.util.AbilityUtil;
-import dk.muj.derius.util.LevelUtil;
 
 public class SneakTask extends RepeatingTask
 {
@@ -77,7 +77,7 @@ public class SneakTask extends RepeatingTask
 			Bukkit.getScheduler().runTaskAsynchronously(DeriusParkour.get(), () ->
 			{
 				String bar = Progressbar.HEALTHBAR_CLASSIC.withQuota((double)unit/setting.getMaxUnits()).withWidth(setting.getMaxUnits()).render();
-				MsgEngine.sendActionBar(player, bar);
+				EngineMsg.sendActionBar(player, bar);
 			});
 
 			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Const.JUMP_EFFECT_TICKS, setting.getPotionLevel(unit), false, false), true);
@@ -91,7 +91,7 @@ public class SneakTask extends RepeatingTask
 		String id = player.getUniqueId().toString();
 		if (DeriusParkour.sneakTime.containsKey(id))
 		{
-			MsgEngine.sendActionBar(player, "");
+			EngineMsg.sendActionBar(player, "");
 			player.removePotionEffect(PotionEffectType.JUMP);
 			DeriusParkour.sneakTime.remove(id);
 		}

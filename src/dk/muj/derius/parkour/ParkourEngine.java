@@ -10,11 +10,11 @@ import org.bukkit.plugin.Plugin;
 import com.massivecraft.massivecore.EngineAbstract;
 import com.massivecraft.massivecore.util.MUtil;
 
-import dk.muj.derius.api.Ability;
-import dk.muj.derius.api.DPlayer;
 import dk.muj.derius.api.DeriusAPI;
 import dk.muj.derius.api.VerboseLevel;
-import dk.muj.derius.util.AbilityUtil;
+import dk.muj.derius.api.ability.Ability;
+import dk.muj.derius.api.player.DPlayer;
+import dk.muj.derius.api.util.AbilityUtil;
 
 public class ParkourEngine extends EngineAbstract
 {

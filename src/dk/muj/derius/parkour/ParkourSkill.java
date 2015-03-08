@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Material;
+import org.bukkit.plugin.Plugin;
 
 import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.xlib.gson.reflect.TypeToken;
 
-import dk.muj.derius.entity.skill.DeriusSkill;
+import dk.muj.derius.api.skill.DeriusSkill;
 
 public class ParkourSkill extends DeriusSkill
 {
@@ -49,6 +50,14 @@ public class ParkourSkill extends DeriusSkill
 	{
 		return "derius:parkour";
 	}
+	
+
+	@Override
+	public Plugin getPlugin()
+	{
+		return DeriusParkour.get();
+	}
+	
 	
 	// -------------------------------------------- //
 	// CONF
@@ -99,5 +108,5 @@ public class ParkourSkill extends DeriusSkill
 	{
 		return get().readConfig(Const.JSON_JUMP_WAIT_UNITS, Short.TYPE);
 	}
-	
+
 }
