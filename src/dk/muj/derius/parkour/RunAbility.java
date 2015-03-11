@@ -2,12 +2,12 @@ package dk.muj.derius.parkour;
 
 import org.bukkit.entity.Player;
 
-import dk.muj.derius.api.ability.DeriusAbility;
+import dk.muj.derius.api.ability.AbilityAbstract;
 import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
 import dk.muj.derius.api.util.LevelUtil;
 
-public class RunAbility extends DeriusAbility
+public class RunAbility extends AbilityAbstract
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT

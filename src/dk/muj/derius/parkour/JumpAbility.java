@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import com.massivecraft.massivecore.util.TimeUnit;
 
-import dk.muj.derius.api.ability.DeriusAbility;
+import dk.muj.derius.api.ability.AbilityAbstract;
 import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
 import dk.muj.derius.api.util.LevelUtil;
 
-public class JumpAbility extends DeriusAbility
+public class JumpAbility extends AbilityAbstract
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
