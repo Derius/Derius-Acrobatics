@@ -1,5 +1,7 @@
 package dk.muj.derius.parkour;
 
+import java.util.Optional;
+
 import org.bukkit.entity.Player;
 
 import dk.muj.derius.api.ability.AbilityAbstract;
@@ -43,12 +45,12 @@ public class RunAbility extends AbilityAbstract
 	}
 	
 	@Override
-	public String getLvlDescriptionMsg(int level)
+	public Optional<String> getLvlDescriptionMsg(int level)
 	{
 		float speed = getPlayerSpeed(level);
 		float bonus = speed / Const.DEFAULT_WALK_SPEED;
-		if ( ((int) (bonus * 100)) == 100) return "<i>none";
-		return String.format("%.2f <i>times faster than the normal", bonus);
+		if ( ((int) (bonus * 100)) == 100) return Optional.of("<i>none");
+		return Optional.of(String.format("%.2f <i>times faster than the normal", bonus));
 	}
 	
 	@Override

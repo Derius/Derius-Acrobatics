@@ -1,5 +1,7 @@
 package dk.muj.derius.parkour;
 
+import java.util.Optional;
+
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
@@ -41,9 +43,9 @@ public class Fall extends AbilityAbstract
 	}
 
 	@Override
-	public String getLvlDescriptionMsg(int lvl)
+	public Optional<String> getLvlDescriptionMsg(int lvl)
 	{
-		return Txt.parse("<i>Fall <h>%s <i>blocks without taking damage", lvl/ParkourSkill.getDamageLessPerLevel() + 3);
+		return Optional.of(Txt.parse("<i>Fall <h>%s <i>blocks without taking damage", lvl/ParkourSkill.getDamageLessPerLevel() + 3));
 	}
 
 	@Override
