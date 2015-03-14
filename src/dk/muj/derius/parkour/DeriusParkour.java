@@ -31,13 +31,13 @@ public class DeriusParkour extends MassivePlugin
 	{
 		if ( ! this.preEnable()) return;
 		
-		SneakTask.get().activate();
-		
 		ParkourEngine.get().activate();
 		ParkourSkill.get().register();
 		JumpAbility.get().register();
 		RunAbility.get().register();
 		Fall.get().register();
+		
+		SneakTask.get().activate();
 		
 		this.postEnable();
 	}
