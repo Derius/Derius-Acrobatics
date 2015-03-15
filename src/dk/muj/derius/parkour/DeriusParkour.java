@@ -31,7 +31,7 @@ public final class DeriusParkour extends MassivePlugin
 	{
 		if ( ! this.preEnable()) return;
 		
-		ParkourEngine.get().activate();
+		EngineParkour.get().activate();
 		ParkourSkill.get().register();
 		JumpAbility.get().register();
 		RunAbility.get().register();

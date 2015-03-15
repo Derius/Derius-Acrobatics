@@ -15,16 +15,17 @@ import dk.muj.derius.api.VerboseLevel;
 import dk.muj.derius.api.ability.Ability;
 import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.util.AbilityUtil;
+import dk.muj.derius.api.util.SkillUtil;
 
-public class ParkourEngine extends EngineAbstract
+public class EngineParkour extends EngineAbstract
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
    
-	private static ParkourEngine i = new ParkourEngine();
-	public static ParkourEngine get() { return i; }
-	private ParkourEngine() { }
+	private static EngineParkour i = new EngineParkour();
+	public static EngineParkour get() { return i; }
+	private EngineParkour() { }
 
 	// -------------------------------------------- //
 	// OVERRIDE
@@ -63,7 +64,10 @@ public class ParkourEngine extends EngineAbstract
 		int exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
 		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
 		
-		dplayer.addExp(ParkourSkill.get(), exp);
+		if (SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGH))
+		{
+			dplayer.addExp(ParkourSkill.get(), exp);
+		}
 	}
 	
 	// -------------------------------------------- //
