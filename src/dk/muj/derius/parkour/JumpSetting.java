@@ -45,7 +45,7 @@ public class JumpSetting
 	
 	public int getMaxUnits()
 	{
-		return (int) Math.ceil(this.getUnitsPerPotionLevel() * this.getMaxPotionLevel());
+		return this.getUnitsPerPotionLevel() * this.getMaxPotionLevel();
 	}
 	
 	public int prepareUnits(int units)

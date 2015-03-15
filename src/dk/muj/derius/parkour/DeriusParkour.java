@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.massivecraft.massivecore.MassivePlugin;
 
-public class DeriusParkour extends MassivePlugin
+public final class DeriusParkour extends MassivePlugin
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
@@ -13,7 +13,7 @@ public class DeriusParkour extends MassivePlugin
 	
 	private static DeriusParkour i;
 	public static DeriusParkour get() { return i; }
-	public DeriusParkour() { i = this; }
+	private DeriusParkour() { i = this; }
 
 	// -------------------------------------------- //
 	// FIELDS

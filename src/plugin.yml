@@ -1,8 +1,8 @@
 main: dk.muj.derius.parkour.DeriusParkour
 name: Derius-Parkour
-version: 0.1_dev
+version: 0.2_dev
 #website: http://muj.dk/Derius
-authors: [madus]
-description: §eDerius is an open skill framework
+authors: [Madus, Ulumulu1510]
+description: <g>An excavation skill for the Derius skill framework.
 depend: [Derius-Core]
 load: startup
