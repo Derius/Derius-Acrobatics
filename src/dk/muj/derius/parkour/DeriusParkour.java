@@ -13,7 +13,7 @@ public final class DeriusParkour extends MassivePlugin
 	
 	private static DeriusParkour i;
 	public static DeriusParkour get() { return i; }
-	private DeriusParkour() { i = this; }
+	public DeriusParkour() { i = this; }
 
 	// -------------------------------------------- //
 	// FIELDS
