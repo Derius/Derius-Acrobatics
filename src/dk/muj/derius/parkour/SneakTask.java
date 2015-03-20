@@ -55,35 +55,44 @@ public class SneakTask extends RepeatingTask
 		int waitUnits = ParkourSkill.getWaitUnits();
 		for (Player player : MUtil.getOnlinePlayers())
 		{
-			DPlayer dplayer = DeriusAPI.getDPlayer(player);
-			Entity entity = player; // Their isOnGround method is better.
-			if ( ! player.isSneaking() || ! entity.isOnGround() ||  ! AbilityUtil.canPlayerActivateAbility(dplayer, JumpAbility.get(), VerboseLevel.ALWAYS))
-			{
-				this.clearPlayer(player);
-				return;
-			}
-			
-			String id = player.getUniqueId().toString();
-			
-			Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(steps, dplayer.getLvl(ParkourSkill.get()));
-			if ( ! optSetting.isPresent()) return;
-			final JumpSetting setting = optSetting.get();
-			final short unit = this.getUnit(id, setting.getMaxUnits());
-
-			DeriusParkour.sneakTime.put(id, (short) (unit+waitUnits));
-
-			if (unit <= 0) return;
-			
-			Bukkit.getScheduler().runTaskAsynchronously(DeriusParkour.get(), () ->
-			{
-				String bar = Progressbar.HEALTHBAR_CLASSIC.withQuota((double)unit/setting.getMaxUnits()).withWidth(setting.getMaxUnits()).render();
-				EngineMsg.sendActionBar(player, bar);
-			});
-
-			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Const.JUMP_EFFECT_TICKS, setting.getPotionLevel(unit), false, false), true);
+			this.handlePlayer(player, steps, waitUnits);
 		}
 		
 		return;
+	}
+	
+	public void handlePlayer(Player player, Map<Integer, JumpSetting> steps, int waitUnits)
+	{
+		DPlayer dplayer = DeriusAPI.getDPlayer(player);
+		if (this.isJumpReady(player, dplayer))
+		{	
+			this.clearPlayer(player);
+			return;
+		}
+					
+		String id = player.getUniqueId().toString();
+		
+		Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(steps, dplayer.getLvl(ParkourSkill.get()));
+		if ( ! optSetting.isPresent()) return;
+		final JumpSetting setting = optSetting.get();
+		final short unit = this.getUnit(id, setting.getMaxUnits());
+
+		DeriusParkour.sneakTime.put(id, (short) (unit+waitUnits));
+
+		if (unit <= 0) return;
+		
+		Bukkit.getScheduler().runTaskAsynchronously(DeriusParkour.get(), () ->
+		{
+			String bar = Progressbar.HEALTHBAR_CLASSIC.withQuota((double)unit/setting.getMaxUnits()).withWidth(setting.getMaxUnits()).render();
+			EngineMsg.sendActionBar(player, bar);
+		});
+
+		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Const.JUMP_EFFECT_TICKS, setting.getPotionLevel(unit), false, false), true);
+	}
+	
+	public boolean isJumpReady(Player player, DPlayer dplayer)
+	{
+		return ( ! player.isSneaking() || ! ((Entity) player).isOnGround() ||  ! AbilityUtil.canPlayerActivateAbility(dplayer, JumpAbility.get(), VerboseLevel.ALWAYS));
 	}
 	
 	public void clearPlayer(Player player)

@@ -25,7 +25,7 @@ public class EngineParkour extends EngineAbstract
    
 	private static EngineParkour i = new EngineParkour();
 	public static EngineParkour get() { return i; }
-	private EngineParkour() { }
+	private EngineParkour() {}
 
 	// -------------------------------------------- //
 	// OVERRIDE
@@ -64,7 +64,7 @@ public class EngineParkour extends EngineAbstract
 		int exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
 		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
 		
-		if (SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGH))
+		if (SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGHEST))
 		{
 			dplayer.addExp(ParkourSkill.get(), exp);
 		}
@@ -91,4 +91,5 @@ public class EngineParkour extends EngineAbstract
 			AbilityUtil.activateAbility(dplayer, ability, null, VerboseLevel.ALWAYS);
 		}
 	}
+	
 }
