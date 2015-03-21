@@ -20,6 +20,7 @@ public class Const
 	public static final String JSON_JUMP_STEPS = "Jump Steps";
 	public static final String JSON_SPEED_BOOST = "Speed Boost";
 	public static final String JSON_JUMP_WAIT_UNITS = "Jump wait units";
+	public static final String JSON_ACTION_BAR_WIDTH = "Action bar width";
 	
 	// -------------------------------------------- //
 	// VALUES

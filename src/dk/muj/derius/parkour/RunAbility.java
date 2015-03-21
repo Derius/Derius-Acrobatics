@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import dk.muj.derius.api.ability.AbilityAbstract;
 import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
-import dk.muj.derius.api.util.AbilityUtil;
 import dk.muj.derius.api.util.LevelUtil;
 
 public class RunAbility extends AbilityAbstract
@@ -50,37 +49,20 @@ public class RunAbility extends AbilityAbstract
 	{
 		float speed = getPlayerSpeed(level);
 		float bonus = speed / Const.DEFAULT_WALK_SPEED;
-		if ( ((int) (bonus * 100)) == 100) return Optional.of("<i>none");
+		if ( ((int) (bonus * 100)) == 100) return Optional.empty();
 		return Optional.of(String.format("%.2f <i>times faster than the normal", bonus));
 	}
 	
 	@Override
 	public Object onActivate(DPlayer dplayer, Object other)
 	{
-		if ( ! dplayer.isPlayer()) return AbilityUtil.CANCEL;
 		Player player = dplayer.getPlayer();
-		
-		float speed;
-		
-		if (other instanceof Number)
-		{
-			speed =  ((Number) other).floatValue();
-		}
-		else
-		{
-			speed = getPlayerSpeed(dplayer.getLvl(this.getSkill()));
-		}
-		
+		float speed = other instanceof Number ? ((Number) other).floatValue() : getPlayerSpeed(dplayer.getLvl(this.getSkill()));
 		player.setWalkSpeed(speed);
-		
 		return speed;
 	}
 	
-	@Override
-	public void onDeactivate(DPlayer p, Object other)
-	{
-		
-	}
+	@Override public void onDeactivate(DPlayer p, Object other) { }
 	
 	// -------------------------------------------- //
 	// UTIL
@@ -88,8 +70,8 @@ public class RunAbility extends AbilityAbstract
 	
 	public static float getPlayerSpeed(int level)
 	{
-		double ret = LevelUtil.getLevelSettingFloat(ParkourSkill.getSpeedBoosts(), level).orElse(Const.DEFAULT_WALK_SPEED);
-		return (float) ret;
+		float ret = (float) LevelUtil.getLevelSettingFloat(ParkourSkill.getSpeedBoosts(), level).orElse(Const.DEFAULT_WALK_SPEED);
+		return ret;
 	}
 	
 	

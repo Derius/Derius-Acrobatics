@@ -39,7 +39,6 @@ public class JumpAbility extends AbilityAbstract
 	{
 		Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), lvl);
 		if ( ! optSetting.isPresent()) return Optional.empty();
-		
 		JumpSetting setting = optSetting.get();
 		
 		int maxUnits = setting.getMaxUnits();
@@ -58,22 +57,7 @@ public class JumpAbility extends AbilityAbstract
 	// OVERRIDE: ACTIVATE
 	// -------------------------------------------- //
 
-	@Override
-	public Object onActivate(DPlayer dplayer, Object other)
-	{
-		if ( ! dplayer.isPlayer()) return null;
-		Optional<JumpSetting> optSetting = LevelUtil.getLevelSetting(ParkourSkill.getJumpSteps(), dplayer.getLvl(this.getSkill()));
-		if ( ! optSetting.isPresent()) return null;
-		JumpSetting setting = optSetting.get();
-		Short units = DeriusParkour.sneakTime.get(dplayer.getId());
-		if (other != null && other instanceof Number) units = ((Number) other).shortValue();
-		
-		int potionLevel = setting.getPotionLevel(units);
-		
-		dplayer.msg(String.valueOf(potionLevel));
-		
-		return units;
-	}
+	@Override public Object onActivate(DPlayer dplayer, Object other) { return ""; }
 
 	@Override
 	public void onDeactivate(DPlayer p, Object other) {}

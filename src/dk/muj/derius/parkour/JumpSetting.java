@@ -6,30 +6,39 @@ public class JumpSetting
 	// FIELDS
 	// -------------------------------------------- //
 	
-	private int unitsPerPotionLevel;
+	private final int unitsPerPotionLevel;
 	public int getUnitsPerPotionLevel(){ return unitsPerPotionLevel; }
-	public void setUnitsPerPotionLevel(int unitsPerPotionLevel){ this.unitsPerPotionLevel = unitsPerPotionLevel; }
+	public JumpSetting withUnitsPerPotionLevel(int unitsPerPotionLevel){ return new JumpSetting(unitsPerPotionLevel, maxPotionLevel); }
 	
-	private int maxPotionLevel;
+	private final int maxPotionLevel;
+	public JumpSetting withMaxPotionLevel(int unitsPerPotionLevel){ return new JumpSetting(unitsPerPotionLevel, maxPotionLevel); }
 	public int getMaxPotionLevel(){ return maxPotionLevel; }
-	public void setMaxPotionLevel(int maxPotionLevel){ this.maxPotionLevel = maxPotionLevel; }
 	
 	// -------------------------------------------- //
 	// CONSTRUCTERS
 	// -------------------------------------------- //
 	
 	// GSON
-	@Deprecated
-	public JumpSetting()
+	private JumpSetting()
 	{
 		this(0, 0);
 	}
 	
 	// Default
-	public JumpSetting(int unitsPerPotionLevel, int maxPotionLevel)
+	private JumpSetting(int unitsPerPotionLevel, int maxPotionLevel)
 	{
-		this.setUnitsPerPotionLevel(unitsPerPotionLevel);
-		this.setMaxPotionLevel(maxPotionLevel);
+		this.unitsPerPotionLevel = unitsPerPotionLevel;
+		this.maxPotionLevel = maxPotionLevel;
+	}
+	
+	// -------------------------------------------- //
+	// FACTORY VALUE OF
+	// -------------------------------------------- //
+
+	// Default
+	public static JumpSetting of(int unitsPerPotionLevel, int maxPotionLevel)
+	{
+		return new JumpSetting(unitsPerPotionLevel, maxPotionLevel);
 	}
 	
 	// -------------------------------------------- //

@@ -77,12 +77,7 @@ public class FallAbility extends AbilityAbstract
 		return event.getDamage();
 	}
 
-	@Override
-	public void onDeactivate(DPlayer p, Object other)
-	{
-		// LELNOPE
-		
-	}
+	@Override public void onDeactivate(DPlayer p, Object other) { }
 
 	@Override
 	public Skill getSkill()

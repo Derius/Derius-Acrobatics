@@ -36,9 +36,10 @@ public class ParkourSkill extends SkillAbstract
 		this.writeConfig(Const.JSON_DAMAGE_LESS_SNEAK_MULTIPLIER, 1.5);
 		this.writeConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, 50);
 		this.writeConfig(Const.JSON_EXP_SNEAK_MULTIPLIER, 3.0);
-		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map(10, new JumpSetting(10, 5) ), new TypeToken<Map<Integer, JumpSetting>>(){});
+		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map(10, JumpSetting.of(10, 5) ), new TypeToken<Map<Integer, JumpSetting>>(){});
 		this.writeConfig(Const.JSON_SPEED_BOOST, MUtil.map(10, (float) 0.1));
 		this.writeConfig(Const.JSON_JUMP_WAIT_UNITS, 20);
+		this.writeConfig(Const.JSON_ACTION_BAR_WIDTH, 50);
 	}
 
 	// -------------------------------------------- //
@@ -65,22 +66,22 @@ public class ParkourSkill extends SkillAbstract
 	
 	public static int getExpPerBlockFallen()
 	{
-		return get().readConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, Integer.TYPE);
+		return get().readConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, int.class);
 	}
 	
 	public static int getDamageLessPerLevel()
 	{
-		return get().readConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, Integer.TYPE);
+		return get().readConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, int.class);
 	}
 	
 	public static double getDamageLessSneakMutiplier()
 	{
-		return get().readConfig(Const.JSON_DAMAGE_LESS_SNEAK_MULTIPLIER, Double.TYPE);
+		return get().readConfig(Const.JSON_DAMAGE_LESS_SNEAK_MULTIPLIER, double.class);
 	}
 	
 	public static double getExpSneakMutiplier()
 	{
-		return get().readConfig(Const.JSON_EXP_SNEAK_MULTIPLIER, Double.TYPE);
+		return get().readConfig(Const.JSON_EXP_SNEAK_MULTIPLIER, double.class);
 	}
 	
 	// We get this value atlast 10 times per second.
@@ -106,7 +107,12 @@ public class ParkourSkill extends SkillAbstract
 	
 	public static short getWaitUnits()
 	{
-		return get().readConfig(Const.JSON_JUMP_WAIT_UNITS, Short.TYPE);
+		return get().readConfig(Const.JSON_JUMP_WAIT_UNITS, short.class);
 	}
 
+	public static short getActionBarWidth()
+	{
+		return get().readConfig(Const.JSON_ACTION_BAR_WIDTH, short.class);
+	}
+	
 }
