@@ -35,7 +35,7 @@ public final class DeriusParkour extends MassivePlugin
 		ParkourSkill.get().register();
 		JumpAbility.get().register();
 		RunAbility.get().register();
-		Fall.get().register();
+		FallAbility.get().register();
 		
 		SneakTask.get().activate();
 		

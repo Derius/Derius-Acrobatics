@@ -49,7 +49,7 @@ public class EngineParkour extends EngineAbstract
 		
 		DPlayer dplayer = DeriusAPI.getDPlayer( (Player) event.getEntity());
 		
-		Object obj = AbilityUtil.activateAbility(dplayer, Fall.get(), event, VerboseLevel.HIGHEST);
+		Object obj = AbilityUtil.activateAbility(dplayer, FallAbility.get(), event, VerboseLevel.HIGHEST);
 		
 		double damage;
 		if (obj instanceof Number)
@@ -61,7 +61,7 @@ public class EngineParkour extends EngineAbstract
 			damage = event.getDamage();
 		}
 		
-		int exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
+		double exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
 		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
 		
 		if (SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGHEST))

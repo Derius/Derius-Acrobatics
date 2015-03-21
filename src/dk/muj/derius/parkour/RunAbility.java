@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import dk.muj.derius.api.ability.AbilityAbstract;
 import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
+import dk.muj.derius.api.util.AbilityUtil;
 import dk.muj.derius.api.util.LevelUtil;
 
 public class RunAbility extends AbilityAbstract
@@ -56,7 +57,7 @@ public class RunAbility extends AbilityAbstract
 	@Override
 	public Object onActivate(DPlayer dplayer, Object other)
 	{
-		if ( ! dplayer.isPlayer()) return null;
+		if ( ! dplayer.isPlayer()) return AbilityUtil.CANCEL;
 		Player player = dplayer.getPlayer();
 		
 		float speed;

@@ -15,7 +15,7 @@ public class Const
 	
 	public static final String JSON_EXP_PER_BLOCK_FALLEN = 	"Experience Per Fallen Block";
 	public static final String JSON_DAMAGE_LESS_PER_LEVEL = "Damage Less Per Level";
-	public static final String JSON_DAMAGE_LESS_SNEAK_MULTIPLIER = "Damage less sneak multiplier";
+	public static final String JSON_DAMAGE_LESS_SNEAK_MULTIPLIER = "Damage Less sneak multiplier";
 	public static final String JSON_EXP_SNEAK_MULTIPLIER = "Exp multiplier by sneaking";
 	public static final String JSON_JUMP_STEPS = "Jump Steps";
 	public static final String JSON_SPEED_BOOST = "Speed Boost";
