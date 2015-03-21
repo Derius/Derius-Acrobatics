@@ -82,7 +82,7 @@ public class EngineParkour extends EngineAbstract
 	@Override
 	public void run()
 	{
-		Ability ability = RunAbility.get();
+		Ability<?> ability = RunAbility.get();
 		for (Player player : MUtil.getOnlinePlayers())
 		{
 			DPlayer dplayer = DeriusAPI.getDPlayer(player);

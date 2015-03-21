@@ -9,7 +9,7 @@ import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
 import dk.muj.derius.api.util.LevelUtil;
 
-public class RunAbility extends AbilityAbstract
+public class RunAbility extends AbilityAbstract<Number>
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
@@ -54,10 +54,10 @@ public class RunAbility extends AbilityAbstract
 	}
 	
 	@Override
-	public Object onActivate(DPlayer dplayer, Object other)
+	public Object onActivate(DPlayer dplayer, Number other)
 	{
 		Player player = dplayer.getPlayer();
-		float speed = other instanceof Number ? ((Number) other).floatValue() : getPlayerSpeed(dplayer.getLvl(this.getSkill()));
+		float speed = other != null ? ((Number) other).floatValue() : getPlayerSpeed(dplayer.getLvl(this.getSkill()));
 		player.setWalkSpeed(speed);
 		return speed;
 	}

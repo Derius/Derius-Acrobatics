@@ -14,7 +14,7 @@ import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
 import dk.muj.derius.api.util.AbilityUtil;
 
-public class FallAbility extends AbilityAbstract
+public class FallAbility extends AbilityAbstract<EntityDamageEvent>
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
@@ -51,10 +51,8 @@ public class FallAbility extends AbilityAbstract
 	}
 
 	@Override
-	public Object onActivate(DPlayer dplayer, Object other)
+	public Object onActivate(DPlayer dplayer, EntityDamageEvent event)
 	{
-		// First we cast
-		EntityDamageEvent event = (EntityDamageEvent) other;
 		// It must be because of fall damage.
 		if (event.getCause() != DamageCause.FALL) return AbilityUtil.CANCEL;
 		if ( !(event.getEntity() instanceof Player)) return AbilityUtil.CANCEL;

@@ -7,7 +7,7 @@ import dk.muj.derius.api.player.DPlayer;
 import dk.muj.derius.api.skill.Skill;
 import dk.muj.derius.api.util.LevelUtil;
 
-public class JumpAbility extends AbilityAbstract
+public class JumpAbility extends AbilityAbstract<Object>
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
