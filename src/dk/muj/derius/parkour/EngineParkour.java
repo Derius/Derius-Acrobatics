@@ -64,7 +64,7 @@ public class EngineParkour extends EngineAbstract
 		double exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
 		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
 		
-		if (SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGHEST))
+		if (exp > 0 && SkillUtil.canPlayerLearnSkill(dplayer, ParkourSkill.get(), VerboseLevel.HIGHEST))
 		{
 			dplayer.addExp(ParkourSkill.get(), exp);
 		}
