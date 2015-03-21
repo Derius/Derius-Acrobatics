@@ -1,5 +1,6 @@
 package dk.muj.derius.parkour;
 
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,22 +45,19 @@ public class EngineParkour extends EngineAbstract
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void reduceFallDamage_and_GiveExp(EntityDamageEvent event)
 	{	
+		// It must be fall damage.
 		if (event.getCause() != DamageCause.FALL) return;
+		// It must be a player
 		if ( ! (event.getEntity() instanceof Player)) return;
 		
-		DPlayer dplayer = DeriusAPI.getDPlayer( (Player) event.getEntity());
+		DPlayer dplayer = DeriusAPI.getDPlayer(event.getEntity());
 		
 		Object obj = AbilityUtil.activateAbility(dplayer, FallAbility.get(), event, VerboseLevel.HIGHEST);
 		
-		double damage;
-		if (obj instanceof Number)
-		{
-			damage = ((Number) obj).doubleValue();
-		}
-		else
-		{
-			damage = event.getDamage();
-		}
+		double damage = obj instanceof Number ? ((Number) obj).doubleValue() : event.getDamage();
+		
+		// The event must not kill them, to gain exp.
+		if (damage > ((Damageable)event.getEntity()).getHealth()) return;
 		
 		double exp = (int) damage * ParkourSkill.getExpPerBlockFallen();
 		if (dplayer.getPlayer().isSneaking()) exp *= ParkourSkill.getExpSneakMutiplier();
