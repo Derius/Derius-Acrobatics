@@ -30,16 +30,32 @@ public class ParkourSkill extends SkillAbstract
 		this.setIcon(Material.LEATHER_BOOTS);
 		
 		this.setDesc("Makes you better at jumping, falling & sprinting");
-		
 		// Setting JSON
 		this.writeConfig(Const.JSON_EXP_PER_BLOCK_FALLEN, 50);
 		this.writeConfig(Const.JSON_DAMAGE_LESS_SNEAK_MULTIPLIER, 1.5);
 		this.writeConfig(Const.JSON_DAMAGE_LESS_PER_LEVEL, 50);
 		this.writeConfig(Const.JSON_EXP_SNEAK_MULTIPLIER, 3.0);
-		this.writeConfig(Const.JSON_JUMP_STEPS, MUtil.map(10, JumpSetting.of(10, 5) ), new TypeToken<Map<Integer, JumpSetting>>(){});
-		this.writeConfig(Const.JSON_SPEED_BOOST, MUtil.map(10, (float) 0.1));
 		this.writeConfig(Const.JSON_JUMP_WAIT_UNITS, 20);
 		this.writeConfig(Const.JSON_ACTION_BAR_WIDTH, 50);
+		
+		this.writeConfig(Const.JSON_SPEED_BOOST,
+				MUtil.map
+				(
+					0, (float) 0.15,
+					500, (float) 0.20,
+					1000, (float) 0.25,
+					2000, (float) 0.3
+				),
+				new TypeToken<Map<Integer, Float>>(){});
+		
+		this.writeConfig(Const.JSON_JUMP_STEPS,
+				MUtil.map
+				(
+					500, JumpSetting.of(9, 7),
+					1000, JumpSetting.of(8, 10),
+					2000, JumpSetting.of(5, 15) 
+				),
+				new TypeToken<Map<Integer, JumpSetting>>(){});
 	}
 
 	// -------------------------------------------- //
